@@ -85,9 +85,25 @@ const StatCard = ({
   </motion.div>
 );
 
+const AQIGauge = ({ value }: { value: number }) => (
+  <div className="w-32 mx-auto">
+    <CircularProgressbar
+      value={value}
+      maxValue={150}
+      text={`${value}`}
+      styles={buildStyles({
+        textSize: '1.5rem',
+        pathColor: value < 50 ? '#10B981' : value < 100 ? '#F59E0B' : '#EF4444',
+        textColor: '#1F2937',
+        trailColor: '#E5E7EB',
+      })}
+    />
+  </div>
+);
+
 const WeatherWidget = ({ data }: { data: typeof weatherData }) => (
-  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl text-white">
-    <h3 className="font-semibold mb-4">Clima Actual</h3>
+  <div className="bg-gradient-to-br from-green-400 to-green-500 p-6 rounded-xl text-white">
+    <h3 className="font-semibold mb-4 text-lg">Clima Actual</h3>
     <div className="grid grid-cols-3 gap-4">
       <div className="flex flex-col items-center">
         <Sun className="h-8 w-8 mb-2" />
@@ -108,45 +124,23 @@ const WeatherWidget = ({ data }: { data: typeof weatherData }) => (
   </div>
 );
 
-const AQIGauge = ({ value }: { value: number }) => (
-  <div className="w-32 mx-auto">
-    <CircularProgressbar
-      value={value}
-      maxValue={150}
-      text={`${value}`}
-      styles={buildStyles({
-        textSize: '1.5rem',
-        pathColor: value < 50 ? '#10B981' : value < 100 ? '#F59E0B' : '#EF4444',
-        textColor: '#1F2937',
-        trailColor: '#E5E7EB',
-      })}
-    />
-  </div>
-);
-
 export const Dashboard = () => {
   return (
-    <div className="space-y-6">
+    <div className="p-6 bg-gray-50 min-h-screen">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-2xl font-bold text-gray-800">Tablero Ambiental</h1>
+        <h1 className="text-2xl font-bold text-green-700">Tablero Ambiental</h1>
         <p className="text-gray-600 mt-1">
-          Monitorea la calidad del aire y el impacto comunitario en tiempo real
+          Monitorea la calidad del aire y el impacto ambiental en tiempo real.
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          icon={AlertTriangle}
-          title="Calidad del Aire (AQI)"
-          value="63"
-          description="Calidad de aire moderada"
-          color="bg-yellow-500"
-          percentage="12"
-        />
+      {/* Sección superior con clima y estadísticas */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+        <WeatherWidget data={weatherData} />
         <StatCard
           icon={Leaf}
           title="Tu Impacto"
@@ -172,93 +166,25 @@ export const Dashboard = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <motion.div
-            className="bg-white p-6 rounded-xl shadow-sm"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h2 className="text-lg font-semibold mb-4">
-              Tendencias de Calidad del Aire (24 horas)
-            </h2>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={pollutionData}>
-                  <defs>
-                    <linearGradient id="colorPM25" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10B981" stopOpacity={0.8} />
-                      <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
-                    </linearGradient>
-                    <linearGradient id="colorNO2" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#6366F1" stopOpacity={0.8} />
-                      <stop offset="95%" stopColor="#6366F1" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                  <XAxis dataKey="time" stroke="#6B7280" />
-                  <YAxis stroke="#6B7280" />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: '#FFF',
-                      border: 'none',
-                      borderRadius: '8px',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                    }}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="PM25"
-                    stroke="#10B981"
-                    fillOpacity={1}
-                    fill="url(#colorPM25)"
-                    name="PM2.5"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="NO2"
-                    stroke="#6366F1"
-                    fillOpacity={1}
-                    fill="url(#colorNO2)"
-                    name="NO₂"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-          </motion.div>
+      {/* Indicador de calidad del aire */}
+      <div className="mt-8">
+        <div className="text-center">
+          <h2 className="text-lg font-bold text-gray-800">Calidad del Aire</h2>
         </div>
-
-        <motion.div
-          className="space-y-6"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <h2 className="text-lg font-semibold mb-4">
-              Calidad del Aire Actual
-            </h2>
-            <AQIGauge value={63} />
-            <div className="mt-4 text-center">
-              <p className="text-yellow-500 font-semibold">Moderada</p>
-              <p className="text-sm text-gray-600 mt-1">
-                Las personas sensibles deben limitar actividades al aire libre
-              </p>
-            </div>
-          </div>
-
-          <WeatherWidget data={weatherData} />
-        </motion.div>
+        <div className="flex justify-center items-center mt-4">
+          <AQIGauge value={63} />
+        </div>
+        <div className="text-center mt-4">
+          <p className="text-yellow-500 font-semibold">Moderada</p>
+          <p className="text-sm text-gray-600 mt-1">
+            Las personas sensibles deben limitar actividades al aire libre.
+          </p>
+        </div>
       </div>
 
-      <motion.div
-        className="bg-white p-6 rounded-xl shadow-sm"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
-      >
-        <h2 className="text-lg font-semibold mb-4">
+      {/* Gráfico de calidad por comuna */}
+      <div className="mt-8 bg-white p-6 rounded-xl shadow-sm">
+        <h2 className="text-lg font-semibold mb-4 text-gray-800">
           Calidad del Aire por Comuna
         </h2>
         <div className="h-[300px]">
@@ -275,12 +201,11 @@ export const Dashboard = () => {
                   boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
                 }}
               />
-              <Bar dataKey="value" fill="#10B981" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="target" fill="#E5E7EB" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="value" fill="#10B981" radius={[4, 4, 0, 0]} />              
             </BarChart>
           </ResponsiveContainer>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
