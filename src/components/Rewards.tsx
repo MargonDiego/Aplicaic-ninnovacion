@@ -1,5 +1,7 @@
 import React from 'react';
-import { Gift, History, Ticket, ShoppingBag, Star } from 'lucide-react';
+import { Leaf, Gift, History, Ticket, ShoppingBag, Star } from 'lucide-react';
+import { motion } from 'framer-motion';
+
 
 interface Reward {
   id: string;
@@ -160,15 +162,24 @@ export const Rewards = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-800">
-          Tienda de Recompensas
-        </h1>
-        <p className="text-gray-600 mt-1">
-          Canjea tus puntos por recompensas amigables con el medio ambiente
-        </p>
-      </div>
+      <div className="p-6 bg-gray-50 min-h-screen">
+        {/* Título principal */}
+        <div className="text-center mb-6">
+           {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-8">
+
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <Leaf className="h-8 w-8 text-green-600" />
+            <h1 className="text-4xl font-bold text-green-600">Tienda de Recompensas</h1>
+          </div>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Canjea tus puntos por recompensas amigables con el medio ambiente.
+          </p>
+        </motion.div>
+      </div>  
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard icon={Gift} label="Puntos Disponibles" value="1250" />

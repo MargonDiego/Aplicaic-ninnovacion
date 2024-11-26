@@ -3,15 +3,7 @@ import { motion } from 'framer-motion';
 import { Leaf, Sun, Droplets, Wind, Trophy, Users } from 'lucide-react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import {
-  BarChart,
-  Bar,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts';
+
 
 const communeData = [
   { name: 'Las Condes', value: 42, quality: 'Buena' },
@@ -28,7 +20,21 @@ const weatherData = {
   airQuality: 'Buena',
 };
 
-const Banner = ({ title, description, buttonText, backgroundImage }: any) => (
+import { Link } from 'react-router-dom';
+
+const Banner = ({
+  title,
+  description,
+  buttonText,
+  backgroundImage,
+  link,
+}: {
+  title: string;
+  description: string;
+  buttonText: string;
+  backgroundImage: string;
+  link: string; // Ruta de destino
+}) => (
   <motion.div
     initial={{ opacity: 0, y: -20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -38,8 +44,8 @@ const Banner = ({ title, description, buttonText, backgroundImage }: any) => (
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
-    }}>
-
+    }}
+  >
     <div
       className="absolute inset-0 bg-black bg-opacity-40"
       style={{ zIndex: 1 }}
@@ -47,9 +53,11 @@ const Banner = ({ title, description, buttonText, backgroundImage }: any) => (
     <div className="relative z-10">
       <h3 className="text-xl font-bold">{title}</h3>
       <p className="mt-2">{description}</p>
-      <button className="mt-4 bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200 transition">
-        {buttonText}
-      </button>
+      <Link to={link}>
+        <button className="mt-4 bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200 transition">
+          {buttonText}
+        </button>
+      </Link>
     </div>
   </motion.div>
 );
@@ -231,12 +239,14 @@ export const Dashboard = () => {
           description="Participa en retos y contribuye a mejorar la calidad del aire."
           buttonText="Ver Retos"
           backgroundImage="https://unarbol.org/wp-content/uploads/2021/10/KIT.jpg"
+          link="/challenges" // Redirección a la página de retos
         />
         <Banner
           title="Gana Recompensas"
           description="Obtén recompensas por tus acciones sostenibles."
           buttonText="Ver Recompensas"
           backgroundImage="https://www.regalosecology.com/WebRoot/StoreES3/Shops/ec7535/MediaGallery/ECOLOGY/SEMILLAS_PORTF/HP/Regalos_de_empresa_ecologicos.jpg"
+          link="/rewards" // Redirección a la página de retos
         />
       </div>
 
