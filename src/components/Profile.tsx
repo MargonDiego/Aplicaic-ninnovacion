@@ -1,17 +1,6 @@
 import React from 'react';
-import {
-  Award,
-  Calendar,
-  MapPin,
-  Settings,
-  TrendingUp,
-  User,
-  Clock,
-  Leaf,
-  Trophy,
-  Gift,
-  Users,
-} from 'lucide-react';
+import {Award,Calendar,MapPin,Settings,TrendingUp,User,Clock,Leaf,Trophy,Gift,Users,} from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface Achievement {
   id: string;
@@ -143,15 +132,26 @@ const ActivityItem = ({ activity }: { activity: Activity }) => (
 );
 
 export const Profile = () => {
+
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-start">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">Mi Perfil</h1>
-          <p className="text-gray-600 mt-1">
-            Gestiona tu cuenta y consulta tu progreso
-          </p>
+    <div className="p-6 bg-gray-50 min-h-screen">
+      {/* Título principal */}
+      <div className="text-center mb-6">
+        {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-8">
+
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <Leaf className="h-8 w-8 text-green-600" />
+          <h1 className="text-4xl font-bold text-green-600">Mi Perfil</h1>
         </div>
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Gestiona tu cuenta y consulta tu progreso.
+        </p>
+      </motion.div>
+      
         <button className="flex items-center space-x-2 px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
           <Settings className="h-5 w-5" />
           <span>Configuración</span>
