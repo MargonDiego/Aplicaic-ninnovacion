@@ -7,6 +7,7 @@ import { StatsCard } from './challenges/StatsCard';
 import { RewardPreview } from './challenges/RewardPreview';
 import { AchievementBanner } from './challenges/AchievementBanner';
 import { CategoryFilter } from './challenges/types';
+import { Leaf, } from 'lucide-react';
 
 const categories: CategoryFilter[] = [
   { id: 'all', label: 'Todos los Retos' },
@@ -21,14 +22,21 @@ export const Challenges: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = React.useState('all');
 
   return (
-    <div className="space-y-6">
+    <div className="p-6 bg-gray-50 min-h-screen">
+      {/* Título principal */}
+      <div className="text-center mb-6">
+        {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-      >
-        <h1 className="text-2xl font-bold text-gray-800">Retos Ambientales</h1>
-        <p className="text-gray-600 mt-1">
-          Completa retos para ganar puntos y generar impacto
+        className="text-center mb-8">
+
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <Leaf className="h-8 w-8 text-green-600" />
+          <h1 className="text-4xl font-bold text-green-600">Retos</h1>
+        </div>
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Competa retos para ganar puntos y generar impacto.
         </p>
       </motion.div>
 
@@ -124,6 +132,7 @@ export const Challenges: React.FC = () => {
           <RewardPreview />
         </div>
       </div>
+    </div>
     </div>
   );
 };

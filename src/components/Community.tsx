@@ -1,15 +1,6 @@
 import React from 'react';
-import {
-  MessageSquare,
-  Heart,
-  Share2,
-  Users,
-  TrendingUp,
-  Award,
-  ThumbsUp,
-  User,
-  MapPin,
-} from 'lucide-react';
+import {MessageSquare,Heart,Share2,Users,TrendingUp,Award,ThumbsUp,User,MapPin,Leaf} from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface Post {
   id: string;
@@ -169,14 +160,26 @@ const CreatePost = () => (
 );
 
 export const Community = () => {
+
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-800">Comunidad</h1>
-        <p className="text-gray-600 mt-1">
-          Conéctate con ciudadanos ecológicos en tu área
+    <div className="p-6 bg-gray-50 min-h-screen">
+      {/* Título principal */}
+      <div className="text-center mb-6">
+        {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-8">
+
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <Leaf className="h-8 w-8 text-green-600" />
+          <h1 className="text-4xl font-bold text-green-600">Comunidad</h1>
+        </div>
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Conéctate con ciudadanos ecológicos en tu área.
         </p>
-      </div>
+      </motion.div>
+      </div>  
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard icon={Users} label="Miembros de la Comunidad" value="1,234" />
