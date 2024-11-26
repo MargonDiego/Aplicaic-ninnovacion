@@ -28,20 +28,32 @@ const weatherData = {
   airQuality: 'Buena',
 };
 
-const Banner = ({ title, description, buttonText, gradient }: any) => (
+const Banner = ({ title, description, buttonText, backgroundImage }: any) => (
   <motion.div
     initial={{ opacity: 0, y: -20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.7 }}
-    className={`rounded-xl p-6 shadow-lg bg-gradient-to-r ${gradient} text-white`}
-  >
-    <h3 className="text-xl font-bold">{title}</h3>
-    <p className="mt-2">{description}</p>
-    <button className="mt-4 bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200 transition">
-      {buttonText}
-    </button>
+    className="rounded-xl p-6 shadow-lg text-white relative overflow-hidden"
+    style={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }}>
+
+    <div
+      className="absolute inset-0 bg-black bg-opacity-40"
+      style={{ zIndex: 1 }}
+    />
+    <div className="relative z-10">
+      <h3 className="text-xl font-bold">{title}</h3>
+      <p className="mt-2">{description}</p>
+      <button className="mt-4 bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200 transition">
+        {buttonText}
+      </button>
+    </div>
   </motion.div>
 );
+
 
 const StatCard = ({ icon: Icon, title, value, description, color }: any) => (
   <motion.div
@@ -175,6 +187,20 @@ const CommuneAirQuality = ({
   );
 };
 
+const Glosario = () => (
+  <div className="bg-white rounded-xl p-6 shadow-md mt-8">
+    <h3 className="text-lg font-bold text-green-700 mb-4">Principales indicadores del aire</h3>
+    <p className="text-gray-700 font-semibold mb-2">¿Conoces el significado de estas siglas?</p>
+      <ul className="list-disc pl-5 mb-4 text-gray-600">
+      <li>MP10: Material Particulado Respirable grueso.</li>
+      <li>MP2,5: Material Particulado Fino.</li>
+      <li>O₃: Ozono.</li>
+      <li>NO₂: Dióxido de Nitrógeno.</li>
+      <li>SO₂: Dióxido de Azufre.</li>
+      <li>CO: Monóxido de Carbono.</li>
+      </ul>
+  </div>
+);
 
 export const Dashboard = () => {
   const [selectedCommune, setSelectedCommune] = useState(communeData[0]);
@@ -183,24 +209,20 @@ export const Dashboard = () => {
     <div className="p-6 bg-gray-50 min-h-screen">
       {/* Título principal */}
       <div className="text-center mb-6">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="text-4xl font-bold text-green-600"
-        >
-          EcoAction
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-gray-600 mt-2 text-lg"
-        >
-          Únete a nuestra comunidad y transforma tu entorno
-          con pequeñas acciones que generan un gran impacto.
-        </motion.p>
-      </div>
+        {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-8">
+
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <Leaf className="h-8 w-8 text-green-600" />
+          <h1 className="text-4xl font-bold text-green-600">EcoAction</h1>
+        </div>
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Juntos por un futuro más verde. Monitorea, actúa y mejora el ambiente de tu comunidad.
+        </p>
+      </motion.div>
 
       {/* Banners */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -208,46 +230,44 @@ export const Dashboard = () => {
           title="Únete a los Retos Ambientales"
           description="Participa en retos y contribuye a mejorar la calidad del aire."
           buttonText="Ver Retos"
-          gradient="from-green-600 to-green-400"
-          backgroundImage="https://source.unsplash.com/600x400/?nature,forest"
+          backgroundImage="https://unarbol.org/wp-content/uploads/2021/10/KIT.jpg"
         />
         <Banner
           title="Gana Recompensas"
           description="Obtén recompensas por tus acciones sostenibles."
           buttonText="Ver Recompensas"
-          gradient="from-blue-600 to-blue-400"
-          backgroundImage="https://source.unsplash.com/600x400/?nature,forest"
+          backgroundImage="https://www.regalosecology.com/WebRoot/StoreES3/Shops/ec7535/MediaGallery/ECOLOGY/SEMILLAS_PORTF/HP/Regalos_de_empresa_ecologicos.jpg"
         />
+      </div>
+
+      {/* Eco Tips */}
+      <div className="mt-8 bg-white rounded-xl p-6 shadow-sm">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+          <Leaf className="h-6 w-6 text-green-500" />
+          Eco Tips del Día
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="p-4 bg-green-50 rounded-lg">
+            <Leaf className="h-6 w-6 text-green-500 mb-2" />
+            <h4 className="font-semibold text-gray-800">Jardín Vertical</h4>
+            <p className="text-sm text-gray-600">Aprovecha tus paredes para crear un jardín vertical y mejora la calidad del aire.</p>
+          </div>
+          <div className="p-4 bg-blue-50 rounded-lg">
+            <Droplets className="h-6 w-6 text-blue-500 mb-2" />
+            <h4 className="font-semibold text-gray-800">Ahorro de Agua</h4>
+            <p className="text-sm text-gray-600">Instala un sistema de recolección de agua de lluvia para tu jardín.</p>
+          </div>
+          <div className="p-4 bg-yellow-50 rounded-lg">
+            <Sun className="h-6 w-6 text-yellow-500 mb-2" />
+            <h4 className="font-semibold text-gray-800">Energía Solar</h4>
+            <p className="text-sm text-gray-600">Considera instalar paneles solares para reducir tu huella de carbono.</p>
+          </div>
+        </div>
       </div>
 
       {/* Widget de clima */}
       <div className="mt-6">
         <WeatherWidget data={weatherData} />
-      </div>
-
-      {/* Indicadores */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-        <StatCard
-          icon={Leaf}
-          title="Impacto Ambiental"
-          value="128.5 kg"
-          description="Reducción de CO₂ lograda este mes gracias a tus acciones."
-          color="bg-green-500"
-        />
-        <StatCard
-          icon={Users}
-          title="Comunidad Activa"
-          value="1,234"
-          description="Participantes comprometidos en actividades ecológicas."
-          color="bg-blue-500"
-        />
-        <StatCard
-          icon={Trophy}
-          title="Tu Posición"
-          value="#42"
-          description="Clasificación en actividades ambientales en tu comuna."
-          color="bg-purple-500"
-        />
       </div>
 
       {/* Selector y calidad del aire */}
@@ -258,6 +278,36 @@ export const Dashboard = () => {
         />
         <CommuneAirQuality selectedCommune={selectedCommune} />
       </div>      
+
+      {/* Indicadores */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        <StatCard
+          icon={Leaf}
+          title="Nuestro Impacto Ambiental"
+          value="128.5 kg"
+          description="Reducción de CO₂ lograda este mes gracias a tus acciones."
+          color="bg-green-500"
+        />
+        <StatCard
+          icon={Users}
+          title="Nuestra Comunidad"
+          value="1,234"
+          description="Participantes comprometidos en actividades ecológicas."
+          color="bg-blue-500"
+        />
+        <StatCard
+          icon={Trophy}
+          title="Tu Ranking en la comunidad"
+          value="#42"
+          description="Clasificación en actividades ambientales en tu comuna."
+          color="bg-purple-500"
+        />
+      </div>
+
+      {/* Glosario */}
+      <Glosario /> 
+     
+    </div>
     </div>
   );
 };
