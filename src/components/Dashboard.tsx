@@ -225,7 +225,7 @@ export const Dashboard = () => {
 
         <div className="flex items-center justify-center gap-3 mb-2">
           <Leaf className="h-8 w-8 text-green-600" />
-          <h1 className="text-4xl font-bold text-green-600">EcoAction</h1>
+          <h1 className="text-4xl font-bold text-green-600">GrinUp</h1>
         </div>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Juntos por un futuro más verde. Monitorea, actúa y mejora el ambiente de tu comunidad.
